@@ -1,1 +1,38 @@
-
+.calc{
+  width: 700px;
+  background-color: rgb(236, 173, 14);
+  padding: 20px;
+}
+.textblock{
+  width: 200px;
+}
+.date{
+  display: flex;
+  
+}
+.buttonblock{
+  height: 22px;
+  background-color: rgb(182, 103, 64);
+  padding: 10px;
+  margin-top: 10px;
+}
+.button{
+  background-color: rgb(209, 47, 47);
+  color: rgb(255, 255, 255);
+  margin-left: 5px;
+  border-radius: 5px;
+  border-color: white;
+}
+i.koef{
+  font-size: 10px;
+}
+input{
+  margin: 3px;
+}
+.or{
+  background-color: rgb(255, 0, 0);
+}
+.button:hover{
+  background-color: rgb(247, 5, 53);
+  border: none;
+}
