@@ -20,7 +20,7 @@ function App() {
   const[distanceStop, setDistanceStop] = useState('');
   const[criticalAngle, setCriticalAngle] = useState('');
   const[criticalSlop, setCriticalSlop] = useState('');
-  
+  const[koef, setKoef] = useState('');
   
   function onSlopChange(e){
     setSlop(e.target.value);
@@ -31,6 +31,38 @@ function App() {
   function onBreakChange(e){
     setBreakeType(e.target.value);
   };
+  function result() {
+    let koeffloat = parseFloat(koef);
+    let speedfloat = parseFloat(speed);
+    let timeHPfloat = parseFloat(timeHP);
+    let timeHRfloat = parseFloat(timeHR);
+    let breakTypefloat = parseFloat(breakeType);
+    let frictionfloat = parseFloat(friction);
+    let shp = koeffloat * timeHPfloat * speedfloat;
+    let shr = koeffloat * timeHRfloat * speedfloat;
+    let sbrl = koeffloat * breakTypefloat * speedfloat;
+    let sb = Math.pow((koeffloat * speedfloat), 2) / (2 * 9.8 * frictionfloat);
+    let stop = shp + shr + sbrl + sb;
+    let tbr = 2 * sb / speedfloat;
+    let a = speedfloat / tbr;
+    setDistanceHP(shp);
+    setDistanceHR(shr);
+    setDistanceBRL(sbrl);
+    setDistanceBreak(sb);
+    setDistanceStop(stop);
+    setTimeBreak(tbr);
+    setDeceleration(a);
+  }
+  function reset(){
+    setSpeed('');
+    setDistanceHP('');
+    setDistanceHR('');
+    setDistanceBRL('');
+    setDistanceBreak('');
+    setDistanceStop('');
+    setTimeBreak('');
+    setDeceleration('');
+  }
   return (
     <>
     <div className='calc'>
@@ -40,9 +72,9 @@ function App() {
         <h4>Входные данные</h4>
         <form>
           <label>Начальная скорость<br /><b>V</b><i className="koef">0</i> <input type='text' value={speed} onChange={(e) => setSpeed(e.target.value)}></input>
-            <select>
-              <option value="#">м/с</option>
-              <option value="#">км/ч</option>
+            <select value={koef} onChange={(e) => setKoef(e.target.value)} >
+              <option value="1">м/с</option>
+              <option value="0.278">км/ч</option>
               <option value="#">фут/с</option>
               <option value="#">миль/ч</option>
             </select> </label><br />
@@ -84,8 +116,8 @@ function App() {
             <input type='text' value={breakeType} onChange={onBreakChange}></input></label><br />
         </form>
         <div className="buttonblock">
-          <button className="button">Рассчитать</button>
-          <button className="button">Сбросить</button>
+          <button className="button" onClick={result}>Рассчитать</button>
+          <button className="button" onClick={reset}>Сбросить</button>
         </div>
         <h4>Выходные данные</h4>
 
@@ -176,7 +208,7 @@ function App() {
         <br />
         <div className="date">
           <div className="textblock">
-            Критический угол для заданного коэффициента трения
+            Критический уклон для заданного коэффициента трения
           </div>
           <div>
             <input className="dateblock" type="text" value={criticalSlop}></input>
